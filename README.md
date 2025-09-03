@@ -12,22 +12,29 @@ A streamlined AI-powered resume generator that creates professional, ATS-optimiz
 - **HR Optimization**: Compelling, results-focused content that impresses recruiters
 - **Job Targeting**: Tailors resumes to specific job descriptions
 - **Clean Architecture**: Separated prompts, templates, and core logic
+- **Single AI Call**: Efficient workflow with one enhancement step
+- **Dual Optimization**: ATS and HR optimized in one pass
+- **Professional Output**: High-quality LaTeX-generated PDFs
+- **Customizable**: Multiple templates and targeting options
 
 ## 📁 Project Structure
 
 ```
 Resume-ai/
-├── demo.py                    # Main demo script
+├── app.py                     # Main script
 ├── requirements.txt           # Python dependencies
-├── README.md                 # This file
-├── resume_env/               # Python virtual environment
+├── README.md                  # This file
+├── resume_env/                # Python virtual environment
 └── src/
+    ├── __init__.py
     ├── ai/
-    │   ├── resume_generator.py    # Core AI resume generator
-    │   └── sample_data.py         # Sample data for testing
+    │   ├── __init__.py
+    │   └── resume_generator.py    # Core AI resume generator
     ├── prompts/
+    │   ├── __init__.py
     │   └── enhancement_prompts.py # AI enhancement prompts
     └── templates/
+        ├── __init__.py
         └── latex_templates.py     # Professional LaTeX templates
 ```
 
@@ -39,38 +46,16 @@ Resume-ai/
    ```
 
 2. **Set API Key**:
+   Create a `.env` file in the root of the project and add your Gemini API key.
+   You can use the `.env.example` file as a template.
    ```bash
-   export GEMINI_API_KEY="your_gemini_api_key_here"
+   GEMINI_API_KEY="your_gemini_api_key_here"
    ```
 
-3. **Run Demo**:
+3. **Run App**:
    ```bash
-   python demo.py
+   python app.py
    ```
-
-## 🎯 Refined Workflow
-
-### Step 1: Collect User Data
-Raw resume data in JSON format with basic information.
-
-### Step 2: Gemini Enhancement (ATS + HR Combined)
-Single powerful AI prompt that:
-- Optimizes keywords for ATS systems
-- Enhances content for human recruiters
-- Quantifies achievements with metrics
-- Uses strong action verbs
-- Maintains JSON structure
-
-### Step 3: Map JSON → LaTeX Template
-Enhanced data is mapped to professional LaTeX templates with:
-- Clean, ATS-friendly formatting
-- Visual appeal for HR review
-- Consistent professional styling
-
-### Step 4: Generate PDF Resume
-LaTeX compilation produces final PDF that is:
-- ATS-passable (structured text, keywords)
-- HR-attractive (well-formatted, impactful)
 
 ## 📋 Available Templates
 
@@ -79,57 +64,11 @@ LaTeX compilation produces final PDF that is:
 3. **Clean Academic** - Best for Academic/Research roles
 4. **Executive** - Best for Senior/Executive roles
 
-## 📊 Sample Profiles
-
-- **Software Engineer** - Full-stack developer with 5+ years experience
-- **Data Scientist** - ML expert with statistical analysis background
-- **Marketing Manager** - Digital marketing professional with growth track record
-
-## 🧪 Testing
-
-The demo script offers two modes:
-1. **Full Demo** - Complete workflow with sample data
-2. **Component Testing** - Test individual AI components
-
-## 🎨 Usage Example
-
-```python
-from src.ai.resume_generator import AIResumeGenerator
-
-# Initialize generator
-generator = AIResumeGenerator(
-    api_key="your_api_key",
-    template_type="modern"
-)
-
-# Raw resume data
-raw_data = {
-    "full_name": "John Doe",
-    "email": "john@example.com",
-    # ... more fields
-}
-
-# Generate enhanced resume
-pdf_path = generator.generate_resume(
-    raw_data=raw_data,
-    job_description="Optional job description for targeting",
-    output_name="john_doe_resume"
-)
-```
-
 ## 🔧 Dependencies
 
 - `google-generativeai` - Gemini AI integration
 - LaTeX distribution (texlive-full) - PDF compilation
 - Python 3.8+ - Core runtime
-
-## 💡 Key Benefits
-
-- **Single AI Call** - Efficient workflow with one enhancement step
-- **Dual Optimization** - ATS and HR optimized in one pass
-- **Professional Output** - High-quality LaTeX-generated PDFs
-- **Customizable** - Multiple templates and targeting options
-- **Clean Architecture** - Separated concerns for maintainability
 
 ## 🚀 Quick Start
 
@@ -137,15 +76,55 @@ pdf_path = generator.generate_resume(
 # 1. Activate environment
 source resume_env/bin/activate
 
-# 2. Set API key
-export GEMINI_API_KEY="your_key"
+# 2. Create .env file and add your API key
+cp .env.example .env
+# then edit .env with your key
 
-# 3. Run demo
-./demo.py
+# 3. Run app
+python app.py
 
 # 4. Select template and profile
 # 5. Get professional PDF resume!
 ```
+
+## 🎨 Usage
+
+The application will prompt you to select a resume template and a sample profile to generate the resume.
+
+1. **Select a Template**: Choose one of the available LaTeX templates.
+2. **Select a Profile**: Choose one of the sample profiles.
+3. **Generate Resume**: The script will generate a PDF resume based on your selections.
+
+The generated resume will be saved in the root directory of the project.
+
+## 📝 Adding New Templates
+
+To add a new LaTeX template, you need to:
+
+1. **Add the Template**: Add the new LaTeX template to the `src/templates/latex_templates.py` file.
+2. **Update the `AIResumeGenerator`**: Add the new template to the `TEMPLATES` dictionary in the `AIResumeGenerator` class in `src/ai/resume_generator.py`.
+
+## 📝 Adding New Profiles
+
+To add a new sample profile, you need to:
+
+1. **Add the Profile**: Add the new profile to the `samples` dictionary in the `load_sample` method in the `app.py` file.
+
+## 📝 Adding New Prompts
+
+To add a new prompt, you need to:
+
+1. **Add the Prompt**: Add the new prompt to the `src/prompts/enhancement_prompts.py` file.
+
+## 📜 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🤝 Contributing
+
+Contributions are welcome! Please feel free to submit a pull request or open an issue.
+
+
 
 ---
 
